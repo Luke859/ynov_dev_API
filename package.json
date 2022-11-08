@@ -1,0 +1,22 @@
+{
+    "name": "dev_api",
+    "version": "1.0.0",
+    "description": "toDoList",
+    "main": "app.js",
+    "author": "Luke <lukebryan@orange.fr>",
+    "license": "MIT",
+    "type": "module",
+    "dependencies": {
+      "@koa/router": "^12.0.0",
+      "dotenv": "^16.0.3",
+      "koa": "^2.13.4",
+      "koa-bodyparser": "^4.3.0",
+      "koa-morgan": "^1.0.1"
+    },
+    "scripts": {
+      "server": "nodemon -r dotenv/config app.js"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.20"
+    }
+  }
