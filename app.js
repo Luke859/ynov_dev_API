@@ -1,59 +1,20 @@
 import Koa from 'koa'
-import Router from '@koa/router'
 import bodyParser from 'koa-bodyparser'
+import { API_V1_ROUTER } from "#routes/index.js"
+import { API_V2_ROUTER } from "#routes/index.js"
+import '#config/database.js'
+import Exemple from "#components/exemple/exemple-model.js"
+import Task from "#components/task/task-model.js"
+import respond from 'koa-respond'
 
 const app = new Koa()
-const router = new Router()
-
-const todos = [
-    {
-        id: 1,
-        title: 'Acheter une voiture'   
-    },
-    {
-        id: 2,
-        title: 'Acheter une montre'   
-    },
-    {
-        id: 3,
-        title: 'Acheter un chien'   
-    }
-]
-
-router.get('/todos', (req) => {
-    req.body = todos
-})
-
-router.get('/todos/:id', (req) => {
-    const task = todos.find(t => parseInt(req.params.id) === t.id)
-    req.body = task
-    
-})
-
-router.post('/todos', (req) => {
-    const newTask = req.request.body
-    todos.push(newTask)
-    console.log(todos)
-    req.status = 200
-});
-
-router.put('/todos/:id', (req) => {
-    const task = todos.find(t => parseInt(req.params.id) === t.id)
-    task.title = 'Modifié'
-    console.log(todos)
-    req.status = 200
-});
-
-router.delete('/todos/:id', (req) => {
-    const updatedTodo = todos.filter(t => parseInt(req.params.id) !== t.id)
-    req.body = updatedTodo
-    console.log(todos)
-
-});
 
 app
 .use(bodyParser())
-.use(router.routes())
-.use(router.allowedMethods())
+.use(respond())
+.use(API_V1_ROUTER.routes())
+.use(API_V1_ROUTER.allowedMethods())
+.use(API_V2_ROUTER.routes())
+.use(API_V2_ROUTER.allowedMethods())
 
 app.listen(process.env.PORT, () => console.log(`Server is listening on PORT: ${process.env.PORT}`))
